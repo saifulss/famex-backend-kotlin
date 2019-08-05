@@ -6,6 +6,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.7.RELEASE"
     kotlin("jvm") version "1.2.71"
     kotlin("plugin.spring") version "1.2.71"
+    kotlin("plugin.allopen") version "1.2.71"
 }
 
 group = "com.example"
@@ -52,4 +53,10 @@ dependencies {
     }
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
 }
