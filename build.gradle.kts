@@ -42,14 +42,14 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-//tasks.withType<Test> {
-//    useJUnitPlatform()
-//}
-//
-//dependencies {
-//    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-//        exclude(module = "junit")
-//    }
-//    testImplementation("org.junit.jupiter:junit-jupiter-api")
-//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-//}
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module = "junit")
+    }
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+}
