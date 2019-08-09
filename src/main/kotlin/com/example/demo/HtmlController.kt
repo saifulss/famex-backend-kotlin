@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 
 @Controller
-class HtmlController(private val repository: ArticleRepository, private val properties: DemoProperties) {
+class HtmlController(private val repository: ArticleRepository, private val properties: FamexProperties) {
 
     @GetMapping("/")
     fun blog(model: Model): String {
