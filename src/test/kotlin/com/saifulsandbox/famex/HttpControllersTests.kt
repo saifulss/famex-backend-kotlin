@@ -1,4 +1,4 @@
-package com.example.demo
+package com.saifulsandbox.famex
 
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every

@@ -1,4 +1,4 @@
-package com.example.demo
+package com.saifulsandbox.famex
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model

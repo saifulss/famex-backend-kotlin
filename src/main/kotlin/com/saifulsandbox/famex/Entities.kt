@@ -1,4 +1,4 @@
-package com.example.demo
+package com.saifulsandbox.famex
 
 import java.time.LocalDateTime
 import javax.persistence.Entity

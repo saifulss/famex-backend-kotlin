@@ -1,4 +1,4 @@
-package com.example.demo
+package com.saifulsandbox.famex
 
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Bean
