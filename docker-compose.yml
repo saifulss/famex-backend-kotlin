@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - 8081:80
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7.22
+    volumes:
+      - db_famex:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=db_famex
+      - MYSQL_USER=db_famex_user
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+
+volumes:
+  db_famex:
