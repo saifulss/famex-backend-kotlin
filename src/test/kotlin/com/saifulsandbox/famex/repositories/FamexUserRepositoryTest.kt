@@ -7,10 +7,9 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.junit.runner.RunWith
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
-
 @DataJpaTest
 @RunWith(SpringRunner::class)
-class FamexFamexUserRepositoryTest {
+class FamexUserRepositoryTest {
 
     @Autowired
     internal var famexUserRepository: FamexUserRepository? = null

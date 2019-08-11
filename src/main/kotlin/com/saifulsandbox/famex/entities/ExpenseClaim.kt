@@ -4,6 +4,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
+@Table(name = "expense_claims")
 data class ExpenseClaim(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

@@ -20,6 +20,8 @@ services:
       - MYSQL_USER=db_famex_user
       - MYSQL_PASSWORD=secret
       - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - 3306:3306
 
 volumes:
   db_famex:

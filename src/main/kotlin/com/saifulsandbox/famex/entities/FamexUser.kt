@@ -3,6 +3,7 @@ package com.saifulsandbox.famex.entities
 import javax.persistence.*
 
 @Entity
+@Table(name = "famex_users")
 data class FamexUser(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
