@@ -19,4 +19,5 @@ class ExpenseClaimRepositoryTest {
     fun it_should_have_no_records() {
         assertEquals(0, expenseClaimRepository!!.count())
     }
+
 }

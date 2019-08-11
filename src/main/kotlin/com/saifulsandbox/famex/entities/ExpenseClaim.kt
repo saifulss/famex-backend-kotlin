@@ -7,15 +7,15 @@ import javax.persistence.*
 data class ExpenseClaim(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
+        val id: Long? = null,
 
-        val name: String,
+        val name: String? = null,
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "payer_id")
-        val payer: FamexUser,
+        val payer: FamexUser? = null,
 
-        val amount: Long,
+        val amount: Long? = null,
 
-        val settledAt: Date
+        val settledAt: Date? = null
 )
