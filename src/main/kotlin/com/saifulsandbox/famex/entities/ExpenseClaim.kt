@@ -17,6 +17,6 @@ data class ExpenseClaim(
         val payer: FamexUser? = null,
 
         val amount: Long? = null,
-
-        val settledAt: Date? = null
+        val settledAt: Date? = null,
+        val createdAt: Date? = null
 )

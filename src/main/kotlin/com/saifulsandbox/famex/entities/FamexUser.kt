@@ -7,7 +7,7 @@ import javax.persistence.*
 data class FamexUser(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long,
+        val id: Long? = null,
 
         val displayName: String,
 
@@ -16,5 +16,5 @@ data class FamexUser(
         val password: String,
 
         @OneToMany(mappedBy = "payer")
-        val expenseClaims: List<ExpenseClaim>
+        val expenseClaims: List<ExpenseClaim>? = null
 )
