@@ -1,1 +1,1 @@
-rootProject.name = "famex"
+rootProject.name = "famex-backend-kotlin"
