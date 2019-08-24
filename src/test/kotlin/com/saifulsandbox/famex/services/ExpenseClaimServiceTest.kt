@@ -35,6 +35,6 @@ class ExpenseClaimServiceTest {
 
         // then we expect to find 2 records
         println(records)
-        assertEquals(1, records.size)
+        assertEquals(2, records.size)
     }
 }
