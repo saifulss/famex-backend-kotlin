@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "famex_users")
 data class FamexUser(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
 
         val displayName: String,
