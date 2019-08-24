@@ -26,7 +26,7 @@ class ExpenseClaimController(private val expenseClaimService: ExpenseClaimServic
         System.err.println(requestBody.amount)
         System.err.println(requestBody.name)
 
-        return expenseClaimService.createNewExpenseClaim(requestBody.amount, requestBody.name)
+        return expenseClaimService.createNewExpenseClaim(requestBody.amount, requestBody.name, -1)
     }
 
 }
