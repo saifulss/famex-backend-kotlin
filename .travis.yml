@@ -5,6 +5,9 @@ language: java
 jdk:
   - openjdk8
 
+before_script:
+  - chmod +x gradlew
+
 script:
   - chmod 755 gradlew
   - ./gradlew test
