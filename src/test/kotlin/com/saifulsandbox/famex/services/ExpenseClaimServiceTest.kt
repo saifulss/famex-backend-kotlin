@@ -1,13 +1,40 @@
 package com.saifulsandbox.famex.services
 
-import org.junit.jupiter.api.Assertions.*
+import com.saifulsandbox.famex.entities.FamexUser
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
+import org.springframework.boot.test.context.SpringBootTest
+import javax.transaction.Transactional
 
+@SpringBootTest
+@AutoConfigureTestEntityManager
 class ExpenseClaimServiceTest {
-    fun it_should_create_a_new_expense_claim() {
-        // given an amount and a
+    @Autowired
+    lateinit var expenseClaimService: ExpenseClaimService
 
-        // when
+    @Autowired
+    lateinit var testEntityManager: TestEntityManager
 
-        // then
+    @Test
+    @Transactional
+    fun `it can fetch expense claim records from database`() {
+        // given 2 expense claim records in database
+        val user = FamexUser(displayName = "user", email = "xxx@xxx.com", password = "xxx")
+        testEntityManager.persistAndFlush(user)
+        assertNotNull(user.id)
+
+        expenseClaimService.createNewExpenseClaim(1, "1", user.id!!)
+        expenseClaimService.createNewExpenseClaim(2, "2", user.id!!)
+
+        // when we fetch all records
+        val records = expenseClaimService.getAll()
+
+        // then we expect to find 2 records
+        println(records)
+        assertEquals(2, records.size)
     }
 }
