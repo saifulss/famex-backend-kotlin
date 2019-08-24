@@ -9,7 +9,7 @@ CREATE TABLE expense_claims
   PRIMARY KEY (id)
 );
 
-CREATE TABLE famex_users
+CREATE TABLE users
 (
   id INT(11) NOT NULL AUTO_INCREMENT,
   display_name VARCHAR(255) NOT NULL,

@@ -1,6 +1,6 @@
 package com.saifulsandbox.famex.services
 
-import com.saifulsandbox.famex.entities.FamexUser
+import com.saifulsandbox.famex.entities.User
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
@@ -23,7 +23,7 @@ class ExpenseClaimServiceTest {
     @Transactional
     fun `it can fetch expense claim records from database`() {
         // given 2 expense claim records in database
-        val user = FamexUser(displayName = "user", email = "xxx@xxx.com", password = "xxx")
+        val user = User(displayName = "user", email = "xxx@xxx.com", password = "xxx")
         testEntityManager.persistAndFlush(user)
         assertNotNull(user.id)
 

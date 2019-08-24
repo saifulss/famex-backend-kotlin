@@ -9,13 +9,13 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @DataJpaTest
 @RunWith(SpringRunner::class)
-class FamexUserRepositoryTest {
+class UserRepositoryTest {
 
     @Autowired
-    internal var famexUserRepository: FamexUserRepository? = null
+    internal var userRepository: UserRepository? = null
 
     @Test
     fun `it should have no records`() {
-        assertEquals(0, famexUserRepository!!.count())
+        assertEquals(0, userRepository!!.count())
     }
 }

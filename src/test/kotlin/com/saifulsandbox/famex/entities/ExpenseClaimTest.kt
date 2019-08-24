@@ -17,7 +17,7 @@ class ExpenseClaimTest {
 
     @Test
     fun `it can fetch a record`() {
-        val user = FamexUser(displayName = "user", email = "xxx@xxx.com", password = "xxx")
+        val user = User(displayName = "user", email = "xxx@xxx.com", password = "xxx")
         testEntityManager.persistAndFlush(user)
 
         // given that the database has an expense claim record with the name "Taxi"

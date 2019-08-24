@@ -8,7 +8,7 @@ class ExpenseClaimDtoFactory {
         fun createFromEntity(entity: ExpenseClaim): ExpenseClaimDto = ExpenseClaimDto(
                 entity.id,
                 entity.name,
-                FamexUserDtoFactory.createFromEntity(entity.payer),
+                UserDtoFactory.createFromEntity(entity.payer),
                 entity.amount,
                 entity.settledAt,
                 entity.createdAt

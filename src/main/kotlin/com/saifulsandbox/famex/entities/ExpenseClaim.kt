@@ -14,7 +14,7 @@ data class ExpenseClaim(
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "payer_id")
-        val payer: FamexUser? = null,
+        val payer: User? = null,
 
         val amount: Long? = null,
         val settledAt: Date? = null,

@@ -3,8 +3,8 @@ package com.saifulsandbox.famex.entities
 import javax.persistence.*
 
 @Entity
-@Table(name = "famex_users")
-data class FamexUser(
+@Table(name = "users")
+data class User(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,

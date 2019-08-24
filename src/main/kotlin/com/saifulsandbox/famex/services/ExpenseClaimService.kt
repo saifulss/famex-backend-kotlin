@@ -2,16 +2,16 @@ package com.saifulsandbox.famex.services
 
 import com.saifulsandbox.famex.entities.ExpenseClaim
 import com.saifulsandbox.famex.repositories.ExpenseClaimRepository
-import com.saifulsandbox.famex.repositories.FamexUserRepository
+import com.saifulsandbox.famex.repositories.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class ExpenseClaimService(val expenseClaimRepository: ExpenseClaimRepository, val famexUserRepository: FamexUserRepository) {
+class ExpenseClaimService(val expenseClaimRepository: ExpenseClaimRepository, val userRepository: UserRepository) {
 
     fun createNewExpenseClaim(amount: Long, name: String, payerId: Long): ExpenseClaim {
-        val currentUser = famexUserRepository.findByIdOrNull(payerId)
+        val currentUser = userRepository.findByIdOrNull(payerId)
                 ?: throw Exception("User with ID $payerId cannot be found.")
 
         val newClaim = ExpenseClaim(name = name, amount = amount, createdAt = Date(), payer = currentUser)
