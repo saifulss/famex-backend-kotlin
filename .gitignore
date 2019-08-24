@@ -22,7 +22,7 @@ build/
 out/
 
 ### NetBeans ###
-/nbproject/private/
+/nbproject/private/˚
 /nbbuild/
 /dist/
 /nbdist/
@@ -30,3 +30,5 @@ out/
 
 ### VS Code ###
 .vscode/
+
+.DS_Store
