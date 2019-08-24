@@ -20,7 +20,7 @@ class ExpenseClaimControllerTest {
     private val mvc: MockMvc? = null
 
     @Test
-    fun index_can_return_2_records_in_json_response() {
+    fun `index can return 2 records in json response`() {
         val mvcResult = mvc?.perform(get("/expense-claims")
                 .contentType(MediaType.APPLICATION_JSON))
                 ?.andExpect(status().isOk)
