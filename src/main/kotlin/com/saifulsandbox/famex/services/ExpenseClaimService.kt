@@ -17,8 +17,5 @@ class ExpenseClaimService(val expenseClaimRepository: ExpenseClaimRepository, va
         return newClaim
     }
 
-    fun getAll(): List<ExpenseClaim> {
-        val expenseClaims = expenseClaimRepository.findAll()
-        return expenseClaims.filterIsInstance<ExpenseClaim>().takeIf { it.size == expenseClaims.count() } as List<ExpenseClaim>
-    }
+    fun getAll(): List<ExpenseClaim> = expenseClaimRepository.findAll()
 }
