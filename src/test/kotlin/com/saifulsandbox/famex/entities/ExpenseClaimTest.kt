@@ -1,6 +1,7 @@
 package com.saifulsandbox.famex.entities
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,9 +16,12 @@ class ExpenseClaimTest {
     lateinit var testEntityManager: TestEntityManager
 
     @Test
-    fun it_can_fetch_a_record() {
+    fun `it can fetch a record`() {
+        val user = FamexUser(displayName = "user", email = "xxx@xxx.com", password = "xxx")
+        testEntityManager.persistAndFlush(user)
+
         // given that the database has an expense claim record with the name "Taxi"
-        val expenseClaim = ExpenseClaim(name = "Taxi", amount = 10000)
+        val expenseClaim = ExpenseClaim(name = "Taxi", amount = 10000, payer = user)
         testEntityManager.persistAndFlush(expenseClaim)
         assertNotNull(expenseClaim.id)
 
