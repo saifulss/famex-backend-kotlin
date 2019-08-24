@@ -1,5 +1,7 @@
 package com.saifulsandbox.famex.controllers
 
+import com.saifulsandbox.famex.dtofactories.ExpenseClaimDtoFactory
+import com.saifulsandbox.famex.dtos.ExpenseClaimDto
 import com.saifulsandbox.famex.entities.ExpenseClaim
 import com.saifulsandbox.famex.requestbodies.ExpenseClaimRequestBody
 import com.saifulsandbox.famex.services.ExpenseClaimService
@@ -14,6 +16,9 @@ class ExpenseClaimController(private val expenseClaimService: ExpenseClaimServic
     // store
     // update
     // destroy
+
+    @GetMapping
+    fun index(): List<ExpenseClaimDto> = expenseClaimService.getAll().map { ExpenseClaimDtoFactory.createFromEntity(it) }
 
     @PostMapping
     fun store(@RequestBody requestBody: ExpenseClaimRequestBody): ExpenseClaim {
