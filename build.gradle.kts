@@ -29,6 +29,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-mustache")
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // The moment this dep is in, your existing endpoints will start to 401 - even without you doing anything.
+    implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("io.jsonwebtoken:jjwt-api:0.10.5")
+    implementation("io.jsonwebtoken:jjwt-impl:0.10.5")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.10.5")
+    implementation("org.apache.commons:commons-lang3:3.9")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
