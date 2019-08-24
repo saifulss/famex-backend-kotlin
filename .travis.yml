@@ -1,9 +1,9 @@
+sudo: required
+
 language: java
 
 jdk:
   - openjdk8
-
-sudo: required
 
 before_install:
   - chmod 777 gradlew
