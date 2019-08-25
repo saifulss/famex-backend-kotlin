@@ -1,6 +1,7 @@
 package com.saifulsandbox.famex
 
 import com.saifulsandbox.famex.constants.SecurityConstants
+import com.saifulsandbox.famex.services.UserService
 import org.hamcrest.core.StringStartsWith
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -22,17 +24,17 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class AuthenticatedRoutesTest {
 
     @Autowired
+    lateinit var userService: UserService
+
+    @Autowired
     private lateinit var mvc: MockMvc
+
     private lateinit var protectedRequestBuilder: MockHttpServletRequestBuilder
     private lateinit var authRequestBuilder: MockHttpServletRequestBuilder
 
     @BeforeEach
     fun setUp() {
         protectedRequestBuilder = get("/expense-claims")    // Arbitrarily chosen route that's known to be protected
-
-        authRequestBuilder = get(SecurityConstants.AUTH_LOGIN_URL)
-                .param("username", "someUser")
-                .param("password", "somePassword")
     }
 
     @Test
@@ -44,7 +46,11 @@ class AuthenticatedRoutesTest {
 
     @Test
     fun `it can authenticate to get JWT access token and use JWT access token to access protected routes`() {
-        val mvcResult = mvc.perform(authRequestBuilder)
+        userService.createNewUser("user@example.com", "secret", "user")
+
+        val mvcResult = mvc.perform(post(SecurityConstants.AUTH_LOGIN_URL)
+                .param("username", "user@example.com")
+                .param("password", "secret"))
                 .andExpect(status().isOk)
                 .andExpect(header().exists("Authorization"))
                 .andExpect(header().string("Authorization", StringStartsWith.startsWith(SecurityConstants.TOKEN_PREFIX)))

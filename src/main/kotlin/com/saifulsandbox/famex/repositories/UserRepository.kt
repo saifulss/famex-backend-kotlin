@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface UserRepository : JpaRepository<User, Long> {
     override fun count(): Long
+
+    fun getByEmail(email: String): List<User?>
 }

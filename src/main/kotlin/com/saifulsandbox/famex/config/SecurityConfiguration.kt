@@ -2,6 +2,8 @@ package com.saifulsandbox.famex.config
 
 import com.saifulsandbox.famex.filters.JwtAuthenticationFilter
 import com.saifulsandbox.famex.filters.JwtAuthorizationFilter
+import com.saifulsandbox.famex.services.CustomUserDetailsService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -19,6 +21,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
+
+    @Autowired
+    lateinit var customUserDetailsService: CustomUserDetailsService
+
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.cors().and()
@@ -36,14 +42,17 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.inMemoryAuthentication()
-                .withUser("someUser")
-                .password(getPasswordEncoder().encode("somePassword"))
-                .authorities("ROLE_USER")
+//        auth.inMemoryAuthentication()
+//                .withUser("someUser")
+//                .password(getPasswordEncoder().encode("somePassword"))
+//                .authorities("ROLE_USER")
+
+        auth.userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder())
     }
 
     @Bean
-    protected fun getPasswordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+    protected fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
     protected fun corsConfigurationSource(): CorsConfigurationSource {

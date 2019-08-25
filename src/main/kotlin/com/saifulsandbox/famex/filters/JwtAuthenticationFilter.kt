@@ -1,6 +1,7 @@
 package com.saifulsandbox.famex.filters
 
 import com.saifulsandbox.famex.constants.SecurityConstants
+import com.saifulsandbox.famex.security.CustomUserDetails
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -8,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.util.*
 import java.util.stream.Collectors
@@ -32,7 +32,7 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
 
     override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse,
                                           filterChain: FilterChain, authentication: Authentication) {
-        val user = authentication.principal as User
+        val user = authentication.principal as CustomUserDetails
 
         val roles = user.authorities
                 .stream()
