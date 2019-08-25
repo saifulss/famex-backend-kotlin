@@ -33,18 +33,18 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     }
 
     @Throws(Exception::class)
-    public override fun configure(auth: AuthenticationManagerBuilder) {
+    override fun configure(auth: AuthenticationManagerBuilder) {
         auth.inMemoryAuthentication()
                 .withUser("user")
-                .password(passwordEncoder().encode("password"))
+                .password(getPasswordEncoder().encode("password"))
                 .authorities("ROLE_USER")
     }
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
+    protected fun getPasswordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
+    protected fun corsConfigurationSource(): CorsConfigurationSource {
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", CorsConfiguration().applyPermitDefaultValues())
 
