@@ -27,14 +27,16 @@ repositories {
 
 dependencies {
 
-    // Spring-related "all-in-one package deal" dependencies
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-mustache")
+    // Spring-related "all-in-one package deal" dependencies.
+    // Note: We purposely don't specify versions; Spring's autoconfiguration behaviour will select for us.
     implementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-mustache")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // Testing-related dependencies for Spring.
-    // The moment this dep is in, your existing endpoints will start to 401 - even without you doing anything.
+    // Note: The moment this dep is in, your existing endpoints will start to 401 - even without you doing anything.
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.security:spring-security-test")
 
