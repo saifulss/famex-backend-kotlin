@@ -26,26 +26,37 @@ repositories {
 }
 
 dependencies {
+
+    // Spring-related "all-in-one package deal" dependencies
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-mustache")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    // Testing-related dependencies for Spring.
     // The moment this dep is in, your existing endpoints will start to 401 - even without you doing anything.
     implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
 
+    // JWT-related dependencies.
     implementation("io.jsonwebtoken:jjwt-api:0.10.5")
     implementation("io.jsonwebtoken:jjwt-impl:0.10.5")
     implementation("io.jsonwebtoken:jjwt-jackson:0.10.5")
-    implementation("org.apache.commons:commons-lang3:3.9")
+
+    // Mystery dependencies that were brought in by Spring Initializr.
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    // Database connector dependencies for MySQL.
     compile("mysql:mysql-connector-java:5.1.45")
+
+    // Migration management dependencies (i.e. FlywayDB).
     compile("org.flywaydb:flyway-core:5.2.4")
 
+    implementation("org.apache.commons:commons-lang3:3.9")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
