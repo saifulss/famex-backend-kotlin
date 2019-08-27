@@ -22,11 +22,12 @@ class ExpenseClaimServiceTest {
     @Test
     @Transactional
     fun `it can fetch expense claim records from database`() {
-        // given 2 expense claim records in database
+        // given 0 expense claim records in database
+        assertEquals(0, expenseClaimService.getAll().size)
+
         val user = User(displayName = "user", email = "xxx@xxx.com", password = "xxx")
         testEntityManager.persistAndFlush(user)
         assertNotNull(user.id)
-
         expenseClaimService.createNewExpenseClaim(1, "1", user.id!!)
         expenseClaimService.createNewExpenseClaim(2, "2", user.id!!)
 
@@ -34,7 +35,6 @@ class ExpenseClaimServiceTest {
         val records = expenseClaimService.getAll()
 
         // then we expect to find 2 records
-        println(records)
         assertEquals(2, records.size)
     }
 }

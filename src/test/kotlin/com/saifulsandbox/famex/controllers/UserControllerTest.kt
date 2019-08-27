@@ -1,14 +1,14 @@
 package com.saifulsandbox.famex.controllers
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.saifulsandbox.famex.TestAuthUtils
 import com.saifulsandbox.famex.requestbodies.UserRequestBody
+import com.saifulsandbox.famex.utils.toJson
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -23,22 +23,27 @@ class UserControllerTest {
     @Autowired
     private lateinit var mvc: MockMvc
 
+    @Autowired
+    private lateinit var testAuthUtils: TestAuthUtils
+
     @Test
-    @WithMockUser
     fun `it can fetch existing users`() {
         val mvcResult = mvc.perform(get("/api/users")
-                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk).andReturn()
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", testAuthUtils.getQuickToken()))
+                .andExpect(status().isOk).andReturn()
         System.err.println(mvcResult.response.contentAsString)
     }
 
     @Test
     fun `it can create a new user while not authenticated`() {
         val userRequestBody = UserRequestBody("email1", "password1", "displayName1")
-        val objectWriter = ObjectMapper().writer().withDefaultPrettyPrinter()
 
         val mvcResult = mvc.perform(post("/api/users")
-                .content(objectWriter.writeValueAsString(userRequestBody))
-                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk).andReturn()
+                .content(toJson(userRequestBody))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", testAuthUtils.getQuickToken()))
+                .andExpect(status().isOk).andReturn()
         System.err.println(mvcResult.response.contentAsString)
     }
 

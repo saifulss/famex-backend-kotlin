@@ -5,7 +5,7 @@ import com.saifulsandbox.famex.entities.User
 data class UserDto(
         val id: Long? = null,
         val displayName: String?,
-        val email: String?
+        val email: String
 ) {
     constructor(user: User) : this(
             user.id,

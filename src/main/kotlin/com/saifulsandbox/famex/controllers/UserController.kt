@@ -6,6 +6,7 @@ import com.saifulsandbox.famex.requestbodies.UserRequestBody
 import com.saifulsandbox.famex.services.UserService
 import org.springframework.web.bind.annotation.*
 
+
 @RestController
 @RequestMapping("/api/users")
 class UserController(private val userService: UserService) {

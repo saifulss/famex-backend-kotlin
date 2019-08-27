@@ -21,4 +21,6 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun getAll(): List<User> = userRepository.findAll()
+
+    fun getByEmail(email: String) = userRepository.getByEmail(email)
 }

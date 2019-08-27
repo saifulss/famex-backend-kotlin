@@ -1,6 +1,8 @@
 package com.saifulsandbox.famex.filters
 
 import com.saifulsandbox.famex.constants.SecurityConstants
+import com.saifulsandbox.famex.dtofactories.UserDtoFactory
+import com.saifulsandbox.famex.services.UserService
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.MalformedJwtException
@@ -20,11 +22,16 @@ import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class JwtAuthorizationFilter(authenticationManager: AuthenticationManager) : BasicAuthenticationFilter(authenticationManager) {
+// This class comes into play when a request comes in supplying an access token. It decides what we load into Spring Security context.
+class JwtAuthorizationFilter(authenticationManager: AuthenticationManager, private val userService: UserService) : BasicAuthenticationFilter(authenticationManager) {
+
     @Throws(IOException::class, ServletException::class)
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse,
+    override fun doFilterInternal(request: HttpServletRequest,
+                                  response: HttpServletResponse,
                                   filterChain: FilterChain) {
+
         val authentication = getAuthentication(request)
+
         if (authentication == null) {
             filterChain.doFilter(request, response)
             return
@@ -44,18 +51,17 @@ class JwtAuthorizationFilter(authenticationManager: AuthenticationManager) : Bas
                         .setSigningKey(signingKey)
                         .parseClaimsJws(token.replace("Bearer ", ""))
 
-                val username = parsedToken
-                        .getBody()
-                        .getSubject()
+                val userEmailFromJwt = parsedToken.body.subject
 
-                val authorities = (parsedToken.body
-                        .get("rol") as List<*>).stream()
+                val retrievedUser = userService.getByEmail(userEmailFromJwt).first()
+                        ?: throw Exception("No user found.")
+
+                val authorities = (parsedToken.body["rol"] as List<*>).stream()
                         .map { authority -> SimpleGrantedAuthority(authority as String) }
                         .collect(Collectors.toList())
-//                        .collect<List<SimpleGrantedAuthority>, Any>(Collectors.toList())
 
-                if (StringUtils.isNotEmpty(username)) {
-                    return UsernamePasswordAuthenticationToken(username, null, authorities)
+                if (StringUtils.isNotEmpty(userEmailFromJwt)) {
+                    return UsernamePasswordAuthenticationToken(UserDtoFactory.createFromEntity(retrievedUser), null, authorities)
                 }
             } catch (exception: ExpiredJwtException) {
                 log.warn("Request to parse expired JWT : {} failed : {}", token, exception.message)

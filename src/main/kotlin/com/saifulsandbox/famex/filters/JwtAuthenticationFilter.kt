@@ -1,21 +1,18 @@
 package com.saifulsandbox.famex.filters
 
+import com.saifulsandbox.famex.JwtUtils
 import com.saifulsandbox.famex.constants.SecurityConstants
 import com.saifulsandbox.famex.security.CustomUserDetails
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
-import io.jsonwebtoken.security.Keys
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import java.util.*
-import java.util.stream.Collectors
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+// This class comes into play when a request comes in giving a username and password, asking for an access token in return.
 class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : UsernamePasswordAuthenticationFilter() {
     init {
         this.authenticationManager = authenticationManager
@@ -30,28 +27,15 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
         return authenticationManager.authenticate(authenticationToken)
     }
 
-    override fun successfulAuthentication(request: HttpServletRequest, response: HttpServletResponse,
-                                          filterChain: FilterChain, authentication: Authentication) {
-        val user = authentication.principal as CustomUserDetails
+    override fun successfulAuthentication(request: HttpServletRequest,
+                                          response: HttpServletResponse,
+                                          filterChain: FilterChain,
+                                          authentication: Authentication) {
+        val customUserDetails = authentication.principal as CustomUserDetails
 
-        val roles = user.authorities
-                .stream()
-                .map { it.authority }
-                .collect(Collectors.toList())
+        val token = JwtUtils().generateToken(customUserDetails)
 
-        val signingKey = SecurityConstants.JWT_SECRET.toByteArray()
-
-        val token = Jwts.builder()
-                .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
-                .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
-                .setIssuer(SecurityConstants.TOKEN_ISSUER)
-                .setAudience(SecurityConstants.TOKEN_AUDIENCE)
-                .setSubject(user.username)
-                .setExpiration(Date(System.currentTimeMillis() + 864000000))
-                .claim("rol", roles)
-                .compact()
-
-        response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token)
+        response.addHeader(SecurityConstants.TOKEN_HEADER, token)
     }
 
     override fun unsuccessfulAuthentication(request: HttpServletRequest?, response: HttpServletResponse?, failed: AuthenticationException?) {

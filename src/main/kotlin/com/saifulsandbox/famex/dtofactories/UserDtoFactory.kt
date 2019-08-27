@@ -5,10 +5,10 @@ import com.saifulsandbox.famex.entities.User
 
 class UserDtoFactory {
     companion object {
-        fun createFromEntity(entity: User?): UserDto = UserDto(
-                entity?.id,
-                entity?.displayName,
-                entity?.email
+        fun createFromEntity(entity: User): UserDto = UserDto(
+                entity.id,
+                entity.displayName,
+                entity.email
         )
     }
 }

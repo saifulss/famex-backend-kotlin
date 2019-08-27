@@ -3,6 +3,7 @@ package com.saifulsandbox.famex.config
 import com.saifulsandbox.famex.filters.JwtAuthenticationFilter
 import com.saifulsandbox.famex.filters.JwtAuthorizationFilter
 import com.saifulsandbox.famex.services.CustomUserDetailsService
+import com.saifulsandbox.famex.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
@@ -25,6 +26,9 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     @Autowired
     lateinit var customUserDetailsService: CustomUserDetailsService
 
+    @Autowired
+    lateinit var userService: UserService
+
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.cors().and()
@@ -35,7 +39,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(JwtAuthorizationFilter(authenticationManager()))
+                .addFilter(JwtAuthorizationFilter(authenticationManager(), userService))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }

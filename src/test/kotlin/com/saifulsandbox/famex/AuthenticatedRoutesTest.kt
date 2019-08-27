@@ -2,7 +2,6 @@ package com.saifulsandbox.famex
 
 import com.saifulsandbox.famex.constants.SecurityConstants
 import com.saifulsandbox.famex.services.UserService
-import org.hamcrest.core.StringStartsWith
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
@@ -53,13 +52,12 @@ class AuthenticatedRoutesTest {
                 .param("password", "secret"))
                 .andExpect(status().isOk)
                 .andExpect(header().exists("Authorization"))
-                .andExpect(header().string("Authorization", StringStartsWith.startsWith(SecurityConstants.TOKEN_PREFIX)))
                 .andReturn()
 
-        val accessTokenWithBearerPrefix = mvcResult.response.getHeaderValue("Authorization") as String
+        val accessToken = mvcResult.response.getHeaderValue("Authorization") as String
 
         mvc.perform(protectedRequestBuilder
-                .header("Authorization", accessTokenWithBearerPrefix))
+                .header("Authorization", "${SecurityConstants.TOKEN_PREFIX}$accessToken"))
                 .andExpect(status().isOk)
     }
 }
