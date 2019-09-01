@@ -4,6 +4,7 @@ import com.saifulsandbox.famex.JwtUtils
 import com.saifulsandbox.famex.constants.SecurityConstants
 import com.saifulsandbox.famex.dtofactories.UserDtoFactory
 import com.saifulsandbox.famex.dtos.TokenDto
+import com.saifulsandbox.famex.requestbodies.AuthenticationRequestBody
 import com.saifulsandbox.famex.security.CustomUserDetails
 import com.saifulsandbox.famex.utils.toJson
 import org.springframework.security.authentication.AuthenticationManager
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import java.util.stream.Collectors
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -23,9 +25,13 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
     }
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse?): Authentication {
-        val username = request.getParameter("username")
-        val password = request.getParameter("password")
-        val authenticationToken = UsernamePasswordAuthenticationToken(username, password)
+        val requestBody = request.reader.lines().collect(Collectors.joining(System.lineSeparator()))
+        val authenticationRequestBody = AuthenticationRequestBody.fromJson(requestBody)
+
+        val authenticationToken = UsernamePasswordAuthenticationToken(
+                authenticationRequestBody.username,
+                authenticationRequestBody.password
+        )
 
         return authenticationManager.authenticate(authenticationToken)
     }
@@ -34,6 +40,7 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
                                           response: HttpServletResponse,
                                           filterChain: FilterChain,
                                           authentication: Authentication) {
+
         val customUserDetails = authentication.principal as CustomUserDetails
 
         val token = JwtUtils().generateToken(customUserDetails)
