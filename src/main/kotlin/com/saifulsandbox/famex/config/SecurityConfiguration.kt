@@ -46,11 +46,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-//        auth.inMemoryAuthentication()
-//                .withUser("someUser")
-//                .password(getPasswordEncoder().encode("somePassword"))
-//                .authorities("ROLE_USER")
-
         auth.userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder())
     }
