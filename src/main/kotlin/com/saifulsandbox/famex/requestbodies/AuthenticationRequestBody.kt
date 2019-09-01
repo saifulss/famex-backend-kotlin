@@ -12,7 +12,9 @@ data class AuthenticationRequestBody(
         val password: String
 ) {
     companion object {
-        fun fromJson(jsonString: String): AuthenticationRequestBody =
-                ObjectMapper().readValue(jsonString, AuthenticationRequestBody::class.java)
+        fun fromJson(jsonString: String): AuthenticationRequestBody {
+            if (jsonString.isEmpty()) throw Exception("JSON string is empty.")
+            return ObjectMapper().readValue(jsonString, AuthenticationRequestBody::class.java)
+        }
     }
 }
