@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("expense-claims")
+@RequestMapping("/api/expense-claims")
 class ExpenseClaimController(private val expenseClaimService: ExpenseClaimService) {
 
     @Autowired

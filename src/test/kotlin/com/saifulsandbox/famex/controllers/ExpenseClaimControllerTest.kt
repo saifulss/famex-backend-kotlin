@@ -29,7 +29,7 @@ class ExpenseClaimControllerTest {
 
     @Test
     fun `it can fetch all expense claims`() {
-        val mvcResult = mvc.perform(get("/expense-claims")
+        val mvcResult = mvc.perform(get("/api/expense-claims")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", testAuthUtils.getQuickToken()))
                 .andExpect(status().isOk).andReturn()
@@ -41,7 +41,7 @@ class ExpenseClaimControllerTest {
     fun `it can create a new expense claim`() {
         val expenseClaimRequestBody = ExpenseClaimRequestBody(1000, "cab")
 
-        val mvcResult = mvc.perform(post("/expense-claims")
+        val mvcResult = mvc.perform(post("/api/expense-claims")
                 .content(toJson(expenseClaimRequestBody))
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", testAuthUtils.getQuickToken()))
