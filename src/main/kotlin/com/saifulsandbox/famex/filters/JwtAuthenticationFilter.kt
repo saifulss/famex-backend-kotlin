@@ -2,7 +2,10 @@ package com.saifulsandbox.famex.filters
 
 import com.saifulsandbox.famex.JwtUtils
 import com.saifulsandbox.famex.constants.SecurityConstants
+import com.saifulsandbox.famex.dtofactories.UserDtoFactory
+import com.saifulsandbox.famex.dtos.TokenDto
 import com.saifulsandbox.famex.security.CustomUserDetails
+import com.saifulsandbox.famex.utils.toJson
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -34,6 +37,10 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
         val customUserDetails = authentication.principal as CustomUserDetails
 
         val token = JwtUtils().generateToken(customUserDetails)
+
+        val tokenDto = TokenDto(UserDtoFactory.createFromEntity(customUserDetails.user), token)
+
+        response.writer.append(toJson(tokenDto))    // TODO: should move this out into a proper auth controller
 
         response.addHeader(SecurityConstants.TOKEN_HEADER, token)
     }
