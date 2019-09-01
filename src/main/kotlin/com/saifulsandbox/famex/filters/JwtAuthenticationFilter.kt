@@ -47,6 +47,7 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
 
         val accessTokenDto = AccessTokenDto(UserDtoFactory.createFromEntity(customUserDetails.user), accessToken)
 
+        response.addHeader("Content-Type", "application/json")
         response.writer.append(toJson(accessTokenDto))    // TODO: should move this out into a proper auth controller
     }
 
