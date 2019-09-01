@@ -3,7 +3,7 @@ package com.saifulsandbox.famex.filters
 import com.saifulsandbox.famex.JwtUtils
 import com.saifulsandbox.famex.constants.SecurityConstants
 import com.saifulsandbox.famex.dtofactories.UserDtoFactory
-import com.saifulsandbox.famex.dtos.TokenDto
+import com.saifulsandbox.famex.dtos.AccessTokenDto
 import com.saifulsandbox.famex.requestbodies.AuthenticationRequestBody
 import com.saifulsandbox.famex.security.CustomUserDetails
 import com.saifulsandbox.famex.utils.toJson
@@ -43,13 +43,11 @@ class JwtAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
 
         val customUserDetails = authentication.principal as CustomUserDetails
 
-        val token = JwtUtils().generateToken(customUserDetails)
+        val accessToken = JwtUtils().generateToken(customUserDetails)
 
-        val tokenDto = TokenDto(UserDtoFactory.createFromEntity(customUserDetails.user), token)
+        val accessTokenDto = AccessTokenDto(UserDtoFactory.createFromEntity(customUserDetails.user), accessToken)
 
-        response.writer.append(toJson(tokenDto))    // TODO: should move this out into a proper auth controller
-
-        response.addHeader(SecurityConstants.TOKEN_HEADER, token)
+        response.writer.append(toJson(accessTokenDto))    // TODO: should move this out into a proper auth controller
     }
 
     override fun unsuccessfulAuthentication(request: HttpServletRequest?, response: HttpServletResponse?, failed: AuthenticationException?) {
