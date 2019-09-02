@@ -20,4 +20,8 @@ class ExpenseClaimService(val expenseClaimRepository: ExpenseClaimRepository, va
     }
 
     fun getAll(): List<ExpenseClaim> = expenseClaimRepository.findAll()
+
+    fun getById(id: Long) = expenseClaimRepository.getOne(id)
+
+    fun save(expenseClaim: ExpenseClaim): ExpenseClaim = expenseClaimRepository.save(expenseClaim)
 }

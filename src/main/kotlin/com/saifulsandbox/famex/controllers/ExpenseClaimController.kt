@@ -31,4 +31,17 @@ class ExpenseClaimController(private val expenseClaimService: ExpenseClaimServic
         return ExpenseClaimDto(expenseClaim)
     }
 
+    @PutMapping("/{id}")
+    fun update(
+            @RequestBody requestBody: ExpenseClaimRequestBody,
+            @PathVariable(value = "id") expenseClaimId: Long
+    ): ExpenseClaimDto {
+        val expenseClaim = expenseClaimService.getById(expenseClaimId)
+
+        expenseClaim.name = requestBody.name
+        expenseClaim.amount = requestBody.amount
+        val saved = expenseClaimService.save(expenseClaim)
+
+        return ExpenseClaimDtoFactory.createFromEntity(saved)
+    }
 }
