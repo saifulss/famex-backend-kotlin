@@ -38,7 +38,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
                 .authorizeRequests()
                 .antMatchers("/api/public").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JwtAuthenticationFilter(authenticationManager()))
@@ -59,6 +58,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     @Bean
     protected fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration()
+        corsConfiguration.applyPermitDefaultValues()
         corsConfiguration.allowedOrigins = mutableListOf("http://localhost:3000")
         corsConfiguration.allowedMethods = mutableListOf("GET", "POST", "PUT")
 
