@@ -13,7 +13,7 @@ data class ExpenseClaimDto(
         val createdAt: Date?
 ) {
     constructor(expenseClaim: ExpenseClaim) : this(
-            null,
+            expenseClaim.id,
             expenseClaim.name,
             UserDtoFactory.createFromEntity(expenseClaim.payer),
             expenseClaim.amount,
