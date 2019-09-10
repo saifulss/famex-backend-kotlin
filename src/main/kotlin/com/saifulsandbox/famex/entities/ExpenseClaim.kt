@@ -10,13 +10,18 @@ data class ExpenseClaim(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
 
-        var name: String? = null,
+        var amount: Long,
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "category_id")
+        var category: Category,
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "payer_id")
         val payer: User,
 
-        var amount: Long,
+        var description: String? = null,
+
         val settledAt: Date? = null,
         val createdAt: Date? = null
 )

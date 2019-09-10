@@ -7,9 +7,10 @@ class ExpenseClaimDtoFactory {
     companion object {
         fun createFromEntity(entity: ExpenseClaim): ExpenseClaimDto = ExpenseClaimDto(
                 entity.id,
-                entity.name,
-                UserDtoFactory.createFromEntity(entity.payer),
                 entity.amount,
+                CategoryDtoFactory.createFromEntity(entity.category),
+                entity.description,
+                UserDtoFactory.createFromEntity(entity.payer),
                 entity.settledAt,
                 entity.createdAt
         )

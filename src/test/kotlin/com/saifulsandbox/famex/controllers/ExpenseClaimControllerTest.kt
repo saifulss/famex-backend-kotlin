@@ -2,6 +2,7 @@ package com.saifulsandbox.famex.controllers
 
 import com.saifulsandbox.famex.TestAuthUtils
 import com.saifulsandbox.famex.requestbodies.ExpenseClaimRequestBody
+import com.saifulsandbox.famex.services.CategoryService
 import com.saifulsandbox.famex.utils.toJson
 import org.junit.jupiter.api.Test
 import org.junit.runner.RunWith
@@ -25,6 +26,9 @@ class ExpenseClaimControllerTest {
     private lateinit var mvc: MockMvc
 
     @Autowired
+    private lateinit var categoryService: CategoryService
+
+    @Autowired
     private lateinit var testAuthUtils: TestAuthUtils
 
     @Test
@@ -39,7 +43,13 @@ class ExpenseClaimControllerTest {
     @Test
     @Transactional
     fun `it can create a new expense claim`() {
-        val expenseClaimRequestBody = ExpenseClaimRequestBody(1000, "cab")
+        val category = categoryService.createNewCategory("xxx")
+
+        val expenseClaimRequestBody = ExpenseClaimRequestBody(
+                1000,
+                category.id!!,
+                "yyy"
+        )
 
         val mvcResult = mvc.perform(post("/api/expense-claims")
                 .content(toJson(expenseClaimRequestBody))

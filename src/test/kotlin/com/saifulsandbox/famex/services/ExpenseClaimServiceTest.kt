@@ -17,6 +17,9 @@ class ExpenseClaimServiceTest {
     lateinit var expenseClaimService: ExpenseClaimService
 
     @Autowired
+    private lateinit var categoryService: CategoryService
+
+    @Autowired
     lateinit var testEntityManager: TestEntityManager
 
     @Test
@@ -28,8 +31,11 @@ class ExpenseClaimServiceTest {
         val user = User(displayName = "user", email = "xxx@xxx.com", password = "xxx")
         testEntityManager.persistAndFlush(user)
         assertNotNull(user.id)
-        expenseClaimService.createNewExpenseClaim(1, "1", user.id!!)
-        expenseClaimService.createNewExpenseClaim(2, "2", user.id!!)
+
+        val category = categoryService.createNewCategory("xxx")
+
+        expenseClaimService.createNewExpenseClaim(1, category.id!!, null, user.id!!)
+        expenseClaimService.createNewExpenseClaim(2, category.id!!, null, user.id!!)
 
         // when we fetch all records
         val records = expenseClaimService.getAll()
