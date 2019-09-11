@@ -9,5 +9,5 @@ import org.springframework.boot.runApplication
 class FamexApplication
 
 fun main(args: Array<String>) {
-	runApplication<FamexApplication>(*args)
+    runApplication<FamexApplication>(*args)
 }

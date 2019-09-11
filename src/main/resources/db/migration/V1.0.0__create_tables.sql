@@ -22,6 +22,6 @@ CREATE TABLE users
 CREATE TABLE categories
 (
     id   INT(11)      NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 );

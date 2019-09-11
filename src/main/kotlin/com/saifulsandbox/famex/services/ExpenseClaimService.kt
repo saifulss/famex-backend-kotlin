@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class ExpenseClaimService(
-        val expenseClaimRepository: ExpenseClaimRepository,
-        val userRepository: UserRepository,
-        val categoryRepository: CategoryRepository
+        private val expenseClaimRepository: ExpenseClaimRepository,
+        private val userRepository: UserRepository,
+        private val categoryRepository: CategoryRepository
 ) {
 
     fun createNewExpenseClaim(amount: Long, categoryId: Long, description: String? = null, payerId: Long): ExpenseClaim {

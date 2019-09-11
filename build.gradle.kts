@@ -61,6 +61,7 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     kapt("org.springframework.boot:spring-boot-configuration-processor")
+    implementation("com.github.javafaker:javafaker:1.0.1")
 }
 
 tasks.withType<KotlinCompile> {
