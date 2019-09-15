@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
+import java.sql.Timestamp
+import java.util.concurrent.TimeUnit
 
 @Component
 class DatabaseSeeder : ApplicationRunner {
@@ -79,12 +81,16 @@ class DatabaseSeeder : ApplicationRunner {
             val randomUserListIndex = faker.number().numberBetween(0, numUserIds)
             val randomUserId = userIds[randomUserListIndex]
 
+            // get random LocalDateTime between 18 months ago and 1 min ago
+            val createdAt = Timestamp(faker.date().past(788401, TimeUnit.MINUTES).time).toLocalDateTime()
+
             val randomNumber = faker.number().numberBetween(1000, 10000)
             expenseClaimService.createNewExpenseClaim(
                     randomNumber.toLong(),
                     randomCategoryId,
                     faker.lorem().words(5).joinToString(" "),
-                    randomUserId
+                    randomUserId,
+                    createdAt
             )
         }
     }

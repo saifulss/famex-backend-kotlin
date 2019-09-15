@@ -15,7 +15,7 @@ class ExpenseClaimService(
         private val categoryRepository: CategoryRepository
 ) {
 
-    fun createNewExpenseClaim(amount: Long, categoryId: Long, description: String? = null, payerId: Long): ExpenseClaim {
+    fun createNewExpenseClaim(amount: Long, categoryId: Long, description: String? = null, payerId: Long, createdAt: LocalDateTime? = null): ExpenseClaim {
         val currentUser = userRepository.findByIdOrNull(payerId)
                 ?: throw Exception("User with ID $payerId cannot be found.")
 
@@ -29,7 +29,7 @@ class ExpenseClaimService(
                 currentUser,
                 description,
                 null,
-                LocalDateTime.now()
+                createdAt ?: LocalDateTime.now()
         )
 
         expenseClaimRepository.save(newClaim)
