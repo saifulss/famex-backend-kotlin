@@ -6,7 +6,7 @@ CREATE TABLE expense_claims
     description VARCHAR(255) NULL,
     payer_id    INT(11)      NOT NULL,
     settled_at  DATETIME     NULL,
-    created_at  DATETIME     NULL,
+    created_at  DATETIME     NOT NULL,
     PRIMARY KEY (id)
 );
 

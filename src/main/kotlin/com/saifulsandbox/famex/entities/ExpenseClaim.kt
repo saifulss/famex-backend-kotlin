@@ -1,6 +1,7 @@
 package com.saifulsandbox.famex.entities
 
-import java.util.*
+import org.springframework.data.annotation.CreatedDate
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -22,6 +23,8 @@ data class ExpenseClaim(
 
         var description: String? = null,
 
-        val settledAt: Date? = null,
-        val createdAt: Date? = null
+        val settledAt: LocalDateTime? = null,
+
+        @CreatedDate
+        val createdAt: LocalDateTime
 )

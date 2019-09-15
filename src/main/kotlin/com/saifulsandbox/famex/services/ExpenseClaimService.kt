@@ -6,6 +6,7 @@ import com.saifulsandbox.famex.repositories.ExpenseClaimRepository
 import com.saifulsandbox.famex.repositories.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class ExpenseClaimService(
@@ -26,7 +27,9 @@ class ExpenseClaimService(
                 amount,
                 category,
                 currentUser,
-                description
+                description,
+                null,
+                LocalDateTime.now()
         )
 
         expenseClaimRepository.save(newClaim)
